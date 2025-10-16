@@ -38,10 +38,10 @@ export interface PieChartData {
 
 export const PIE_CHART_DATA: PieChartData[] = [
   { browser: 'chrome', visitors: 275, fill: 'var(--foreground)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--muted-foreground)' },
+  { browser: 'safari', visitors: 200, fill: 'var(--accent)' },
   { browser: 'firefox', visitors: 287, fill: 'var(--border)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--muted)' },
-  { browser: 'other', visitors: 190, fill: 'var(--accent)' },
+  { browser: 'edge', visitors: 173, fill: 'var(--muted-foreground)' },
+  { browser: 'other', visitors: 190, fill: 'var(--muted)' },
 ];
 
 export const CHART_FOOTER_DATA: ChartFooterData = {
