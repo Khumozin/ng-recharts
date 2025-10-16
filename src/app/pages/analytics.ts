@@ -15,13 +15,24 @@ import {
   selector: 'app-analytics',
   imports: [ChartCard],
   template: `
-    @for (chartConfig of chartConfigs(); track chartConfig.title) {
-      <app-chart-card [config]="chartConfig" />
-    }
+    <div class="container mx-auto px-4 py-8">
+      <header class="mb-8">
+        <h1 class="text-4xl font-bold tracking-tight mb-2">Analytics Dashboard</h1>
+        <p class="text-muted-foreground text-lg">
+          Interactive charts powered by Recharts and Angular
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        @for (chartConfig of chartConfigs(); track chartConfig.title) {
+          <app-chart-card [config]="chartConfig" />
+        }
+      </div>
+    </div>
   `,
   providers: [provideIcons({ lucideTrendingUp })],
   host: {
-    class: 'w-full h-screen flex items-center justify-center gap-4',
+    class: 'w-full min-h-screen bg-background',
   },
 })
 export default class Analytics {

@@ -15,19 +15,19 @@ export interface ChartCardConfig {
   selector: 'app-chart-card',
   imports: [HlmCardImports, ReactBridge, ChartCardFooter],
   template: `
-    <section hlmCard class="w-96">
+    <section hlmCard class="w-full h-full flex flex-col">
       <div hlmCardHeader>
         <h3 hlmCardTitle>{{ config().title }}</h3>
         <p hlmCardDescription>{{ config().description }}</p>
       </div>
-      <div hlmCardContent class="flex-1 pb-0">
+      <div hlmCardContent class="flex-1 pb-0 min-h-[300px]">
         <react-bridge
           [componentLoader]="config().componentLoader"
           [props]="config().props"
           class="w-full h-full"
         />
       </div>
-      <div hlmCardFooter>
+      <div hlmCardFooter class="mt-auto">
         <app-chart-card-footer [data]="config().footer" />
       </div>
     </section>
