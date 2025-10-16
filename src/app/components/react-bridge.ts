@@ -1,20 +1,37 @@
-import { Component, effect, ElementRef, input, OnDestroy, output, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, input, OnDestroy, output, signal, viewChild } from '@angular/core';
 
 import * as React from 'react';
 import { type Root, createRoot } from 'react-dom/client';
 
-// Define type for the dynamic import function
-export type ReactComponentLoader<T = any> = () => Promise<{ default: React.ComponentType<T> }>;
+export type ReactComponentLoader<T = Record<string, unknown>> = () => Promise<{
+  default: React.ComponentType<T>;
+}>;
 
 @Component({
   selector: 'react-bridge',
   imports: [],
-  template: `<div #reactHost class="w-full h-full"></div>`,
+  template: `
+    <div #reactHost class="w-full h-full">
+      @if (isLoading()) {
+        <div class="flex items-center justify-center h-full">
+          <p class="text-muted-foreground text-sm">Loading chart...</p>
+        </div>
+      }
+      @if (error()) {
+        <div class="flex items-center justify-center h-full">
+          <p class="text-destructive text-sm">Failed to load chart. Please try again.</p>
+        </div>
+      }
+    </div>
+  `,
 })
 export class ReactBridge implements OnDestroy {
   componentLoader = input.required<ReactComponentLoader>();
-  props = input<any>({});
+  props = input<Record<string, unknown>>({});
   event = output<unknown>();
+
+  readonly isLoading = signal(true);
+  readonly error = signal(false);
 
   private _hostElement = viewChild.required<ElementRef<HTMLElement>>('reactHost');
   private _reactRoot: Root | null = null;
@@ -24,6 +41,9 @@ export class ReactBridge implements OnDestroy {
       const loader = this.componentLoader();
       const props = this.props();
       const host = this._hostElement().nativeElement;
+
+      this.isLoading.set(true);
+      this.error.set(false);
 
       try {
         const { default: Component } = await loader();
@@ -38,8 +58,11 @@ export class ReactBridge implements OnDestroy {
         });
 
         this._reactRoot.render(reactElement);
-      } catch (error) {
-        console.error('Failed to load or render React component:', error);
+        this.isLoading.set(false);
+      } catch (err) {
+        console.error('Failed to load or render React component:', err);
+        this.error.set(true);
+        this.isLoading.set(false);
 
         this._reactRoot?.unmount();
         this._reactRoot = null;
