@@ -12,10 +12,10 @@ export const description = "A donut chart with text"
 
 const defaultChartData = [
     { browser: 'chrome', visitors: 275, fill: 'var(--foreground)' },
-    { browser: 'safari', visitors: 200, fill: 'var(--muted-foreground)' },
+    { browser: 'safari', visitors: 200, fill: 'var(--accent)' },
     { browser: 'firefox', visitors: 287, fill: 'var(--border)' },
-    { browser: 'edge', visitors: 173, fill: 'var(--muted)' },
-    { browser: 'other', visitors: 190, fill: 'var(--accent)' },
+    { browser: 'edge', visitors: 173, fill: 'var(--muted-foreground)' },
+    { browser: 'other', visitors: 190, fill: 'var(--muted)' },
 ]
 
 const defaultChartConfig = {
@@ -24,23 +24,23 @@ const defaultChartConfig = {
   },
   chrome: {
     label: "Chrome",
-    color: "var(--chart-1)",
+    color: "var(--foreground)",
   },
   safari: {
     label: "Safari",
-    color: "var(--chart-2)",
+    color: "var(--accent)",
   },
   firefox: {
     label: "Firefox",
-    color: "var(--chart-3)",
+    color: "var(--border)",
   },
   edge: {
     label: "Edge",
-    color: "var(--chart-4)",
+    color: "var(--muted-foreground)",
   },
   other: {
     label: "Other",
-    color: "var(--chart-5)",
+    color: "var(--muted)",
   },
 } satisfies ChartConfig
 
