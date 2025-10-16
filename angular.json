@@ -28,6 +28,18 @@
             ],
             "styles": [
               "src/styles.scss"
+            ],
+            "allowedCommonJsDependencies": [
+                "react",
+                "react-dom",
+                "react-dom/client",
+                "react/jsx-runtime",
+                "recharts",
+                "es-toolkit",
+                "decimal.js-light",
+                "react-is",
+                "use-sync-external-store",
+                "react-redux"
             ]
           },
           "configurations": {
